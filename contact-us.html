@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nous contacter</title>
+    <link rel="icon" href="logo-Icon.png" type="image/png" sizes="128x128">
+    <link rel="stylesheet" href="./contact-us/style.css">
+</head>
+<body>
+    <h1>Contactez-nous</h1>
+    <form id="contact-form">
+        <input type="text" id="name" name="name" placeholder="Votre nom" required><br>
+        <input type="email" id="email" name="email" placeholder="Votre email" required><br>
+        <input type="text" id="subject" name="subject" placeholder="Sujet" required><br> 
+        <textarea id="message" name="message" placeholder="Votre message" rows="15" cols="60"></textarea><br>
+        <button type="submit">Envoyer</button>
+    </form>
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <script>
+    (function() {
+        emailjs.init("QS93A9o9xo0_E6UJP");
+    })();
+
+    document.getElementById("contact-form").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        // Récupération des champs
+        const subject = document.getElementById("subject").value;
+        const email = document.getElementById("email").value;
+        const name = document.getElementById("name").value;
+        const message = document.getElementById("message").value;
+
+        // Paramètres pour EmailJS
+        const params = {
+        subject: subject,
+        email: email,
+        name: name,
+        message: message
+        };
+
+        // Envoi
+        emailjs.send("service_ccah65g", "template_jb3q8ds", params)
+        .then(function(response) {
+            alert("Message envoyé ✅");
+            document.getElementById("contact-form").reset();
+        })
+        .catch(function(error) {
+            alert("Erreur ❌ : " + JSON.stringify(error));
+        });
+    });
+</script>
+</body>
+</html>
